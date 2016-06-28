@@ -19,14 +19,13 @@ class ButterCMS
         $this->authToken = $authToken;
     }
 
-    protected function request($url)
+    protected function request($url, $params = [])
     {
         $client = new Client();
         try {
+            $params['auth_token'] = $this->authToken;
             $response = $client->get(self::API_ROOT_URL . $url, [
-                'query' => [
-                    'auth_token' => $this->authToken
-                ]
+                'query' => $params
             ]);
         } catch (ClientException $e) {
             var_dump($e->getMessage());
@@ -35,6 +34,12 @@ class ButterCMS
 
         $responseString = $response->getBody()->getContents();
         return json_decode($responseString, true);
+    }
+
+    public function getCategory($categorySlug)
+    {
+        $rawCategory = $this->request('categories/' . $categorySlug);
+        return new Category($rawCategory['data']);
     }
 
     public function getCategories()
