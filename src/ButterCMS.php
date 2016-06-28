@@ -4,7 +4,9 @@ namespace ButterCMS;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use ButterCMS\Model\Author;
 use ButterCMS\Model\Category;
+use ButterCMS\Model\Post;
 
 class ButterCMS
 {
@@ -44,9 +46,9 @@ class ButterCMS
 
     public function getAuthors()
     {
-        $rawAuthorData = $this->request('authors');
+        $rawAuthors = $this->request('authors');
         $authors = [];
-        foreach ($rawAuthorData['data'] as $rawAuthor) {
+        foreach ($rawAuthors['data'] as $rawAuthor) {
             $authors[] = new Author($rawAuthor);
         }
         return $authors;
@@ -66,5 +68,21 @@ class ButterCMS
             $categories[] = new Category($rawCategory);
         }
         return $categories;
+    }
+
+    public function getPost($postSlug)
+    {
+        $rawPost = $this->request('posts/' . $postSlug);
+        return new Post($rawPost['data']);
+    }
+
+    public function getPosts()
+    {
+        $rawPosts = $this->request('posts');
+        $posts = [];
+        foreach ($rawPosts['data'] as $rawPost) {
+            $posts[] = new Post($rawPost);
+        }
+        return $posts;
     }
 }

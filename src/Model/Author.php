@@ -17,9 +17,4 @@ class Author extends Model
         $instagram_url,
         $twitter_handle,
         $profile_image;
-
-    public function getSlug()
-    {
-        return $this->slug;
-    }
 }
