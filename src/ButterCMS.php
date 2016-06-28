@@ -36,6 +36,22 @@ class ButterCMS
         return json_decode($responseString, true);
     }
 
+    public function getAuthor($authorSlug)
+    {
+        $rawAuthor = $this->request('authors/' . $authorSlug);
+        return new Author($rawAuthor['data']);
+    }
+
+    public function getAuthors()
+    {
+        $rawAuthorData = $this->request('authors');
+        $authors = [];
+        foreach ($rawAuthorData['data'] as $rawAuthor) {
+            $authors[] = new Author($rawAuthor);
+        }
+        return $authors;
+    }
+
     public function getCategory($categorySlug)
     {
         $rawCategory = $this->request('categories/' . $categorySlug);
