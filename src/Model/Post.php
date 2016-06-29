@@ -5,6 +5,7 @@ namespace ButterCMS\Model;
 class Post extends Model
 {
     protected
+        $meta, // Special cookie
         $slug,
         $url,
         $published,
@@ -35,6 +36,11 @@ class Post extends Model
         }
 
         parent::__construct($data);
+    }
+
+    public function setMeta($meta)
+    {
+        $this->meta = $meta;
     }
 
     public function isPublished()

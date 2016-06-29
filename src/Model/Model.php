@@ -4,6 +4,9 @@ namespace ButterCMS\Model;
 
 class Model
 {
+    protected
+        $meta;
+
     public function __construct(array $data)
     {
         $class = get_class($this);

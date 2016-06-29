@@ -36,7 +36,12 @@ class ButterCMS
         }
 
         $responseString = $response->getBody()->getContents();
-        return json_decode($responseString, true);
+        $dataArray = json_decode($responseString, true);
+        if (is_array($dataArray) && JSON_ERROR_NONE === json_last_error()) {
+            return $dataArray;
+        }
+
+        return false;
     }
 
     ///////////////
@@ -46,7 +51,7 @@ class ButterCMS
     public function getFeed($type)
     {
         $feedData = $this->request('feeds/' . $type);
-        if (!isset($feedData)) {
+        if (empty($feedData['data'])) {
             return false;
         }
 
@@ -63,9 +68,9 @@ class ButterCMS
         return new Author($rawAuthor['data']);
     }
 
-    public function getAuthors()
+    public function getAuthors($params = [])
     {
-        $rawAuthors = $this->request('authors');
+        $rawAuthors = $this->request('authors', $params);
         $authors = [];
         foreach ($rawAuthors['data'] as $rawAuthor) {
             $authors[] = new Author($rawAuthor);
@@ -83,9 +88,9 @@ class ButterCMS
         return new Category($rawCategory['data']);
     }
 
-    public function getCategories()
+    public function getCategories($params = [])
     {
-        $rawCategories = $this->request('categories');
+        $rawCategories = $this->request('categories', $params);
         $categories = [];
         foreach ($rawCategories['data'] as $rawCategory) {
             $categories[] = new Category($rawCategory);
@@ -100,15 +105,32 @@ class ButterCMS
     public function getPost($postSlug)
     {
         $rawPost = $this->request('posts/' . $postSlug);
-        return new Post($rawPost['data']);
+        $post = new Post($rawPost['data']);
+        $post->setMeta($rawPost['meta']);
+        return $post;
     }
 
-    public function getPosts()
+    public function getPosts($params = [])
     {
-        $rawPosts = $this->request('posts');
+        $rawPosts = $this->request('posts', $params);
         $posts = [];
         foreach ($rawPosts['data'] as $rawPost) {
-            $posts[] = new Post($rawPost);
+            $post = new Post($rawPost);
+            $post->setMeta($rawPosts['meta']);
+            $posts[] = $post;
+        }
+        return $posts;
+    }
+
+    public function searchPosts($query, $params = [])
+    {
+        $params['query'] = $query;
+        $rawPosts = $this->request('search', $params);
+        $posts = [];
+        foreach ($rawPosts['data'] as $rawPost) {
+            $post = new Post($rawPost);
+            $post->setMeta($rawPosts['meta']);
+            $posts[] = $post;
         }
         return $posts;
     }
