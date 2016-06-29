@@ -14,29 +14,48 @@ class ButterCMS
         API_ROOT_URL = 'https://api.buttercms.com/v2/';
 
     protected
-        $authToken;
+        $authToken,
+        $client;
 
     public function __construct($authToken)
     {
         $this->authToken = $authToken;
+
+        $this->client = new Client();
     }
 
     protected function request($url, $params = [])
     {
-        $client = new Client();
         try {
             $params['auth_token'] = $this->authToken;
-            $response = $client->get(self::API_ROOT_URL . $url, [
+            $response = $this->client->get(self::API_ROOT_URL . $url, [
                 'query' => $params
             ]);
         } catch (ClientException $e) {
-            var_dump($e->getMessage());
             return false;
         }
 
         $responseString = $response->getBody()->getContents();
         return json_decode($responseString, true);
     }
+
+    ///////////////
+    // Feeds
+    ///////////////
+
+    public function getFeed($type)
+    {
+        $feedData = $this->request('feeds/' . $type);
+        if (!isset($feedData)) {
+            return false;
+        }
+
+        return new \SimpleXMLElement($feedData['data']);
+    }
+
+    ///////////////
+    // Authors
+    ///////////////
 
     public function getAuthor($authorSlug)
     {
@@ -54,6 +73,10 @@ class ButterCMS
         return $authors;
     }
 
+    ///////////////
+    // Categories
+    ///////////////
+
     public function getCategory($categorySlug)
     {
         $rawCategory = $this->request('categories/' . $categorySlug);
@@ -69,6 +92,10 @@ class ButterCMS
         }
         return $categories;
     }
+
+    ///////////////
+    // Posts
+    ///////////////
 
     public function getPost($postSlug)
     {
