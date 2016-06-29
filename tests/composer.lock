@@ -13,7 +13,7 @@
             "source": {
                 "type": "git",
                 "url": "../",
-                "reference": "93e3e9e7c2269d4ff79db50b73bdd1d24554d496"
+                "reference": "d9c961bdb05efec76d5d982007c51c3155bb9f58"
             },
             "require": {
                 "guzzlehttp/guzzle": "~6.0",
@@ -32,7 +32,7 @@
                 }
             ],
             "description": "ButterCMS PHP API Wrapper",
-            "time": "2016-06-28 22:53:15"
+            "time": "2016-06-28 23:25:45"
         },
         {
             "name": "guzzlehttp/guzzle",

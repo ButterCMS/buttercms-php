@@ -4,7 +4,7 @@ namespace ButterCMS\Model;
 
 class Model
 {
-    public function __construct($data)
+    public function __construct(array $data)
     {
         $class = get_class($this);
         foreach ($data as $key => $value) {

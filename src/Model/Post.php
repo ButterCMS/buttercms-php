@@ -15,7 +15,30 @@ class Post extends Model
         $summary,
         $seo_title,
         $meta_description,
-        // $author,
-        // $categories,
+        $author,
+        $categories,
         $featured_image;
+
+    public function __contruct(array $data)
+    {
+        if (!empty($data['author'])) {
+            $this->author = new Author($data['author']);
+            unset($data['author']);
+        }
+
+        if (!empty($data['categories'])) {
+            $this->categories = [];
+            foreach ($data['categories'] as $categoryData) {
+                $author = new Category($categoryData);
+            }
+            unset($data['categories']);
+        }
+
+        parent::__construct($data);
+    }
+
+    public function isPublished()
+    {
+        return 'published' === $this->status;
+    }
 }
