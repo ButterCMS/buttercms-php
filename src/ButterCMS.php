@@ -143,28 +143,6 @@ class ButterCMS
     {
         $params = ['keys' => implode(',', $keys)];
         $rawContentFields = $this->request('content', $params);
-        $contentFields = [];
-        foreach ($rawContentFields['data'] as $rawContentFieldSlug => $rawContentFieldValue) {
-            $contentField = new \stdClass;
-            $contentField->slug = $rawContentFieldSlug;
-            $contentField->value = $this->convertToObjects($rawContentFieldValue);
-            $contentFields[$rawContentFieldSlug] = $contentField;
-        }
-        return $contentFields;
-    }
-
-    private function convertToObjects($dataArray)
-    {
-        if (is_array($dataArray)) {
-            $newDataArray = [];
-            foreach ($dataArray as $items) {
-                foreach ($items as $itemSlug => $itemValue) {
-                    $newDataArray[] = (object)['slug' => $itemSlug, 'value' => $itemValue];
-                }
-            }
-            return $newDataArray;
-        } else {
-            return $dataArray;
-        }
+        return $rawContentFields['data'];
     }
 }
