@@ -5,7 +5,6 @@ namespace ButterCMS\Model;
 class Post extends Model
 {
     protected
-        $meta, // Special cookie
         $slug,
         $url,
         $published,
@@ -20,7 +19,7 @@ class Post extends Model
         $categories,
         $featured_image;
 
-    public function __contruct(array $data)
+    public function __construct(array $data)
     {
         if (!empty($data['author'])) {
             $this->author = new Author($data['author']);
@@ -30,17 +29,12 @@ class Post extends Model
         if (!empty($data['categories'])) {
             $this->categories = [];
             foreach ($data['categories'] as $categoryData) {
-                $author = new Category($categoryData);
+                $this->categories[] = new Category($categoryData);
             }
             unset($data['categories']);
         }
 
         parent::__construct($data);
-    }
-
-    public function setMeta($meta)
-    {
-        $this->meta = $meta;
     }
 
     public function isPublished()

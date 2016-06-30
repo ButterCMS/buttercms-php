@@ -8,6 +8,8 @@ require_once __DIR__ . '/../src/Model/Model.php';
 require_once __DIR__ . '/../src/Model/Author.php';
 require_once __DIR__ . '/../src/Model/Category.php';
 require_once __DIR__ . '/../src/Model/Post.php';
+require_once __DIR__ . '/../src/Model/PostResponse.php';
+require_once __DIR__ . '/../src/Model/PostsResponse.php';
 
 use ButterCMS\ButterCMS;
 

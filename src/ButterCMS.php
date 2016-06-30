@@ -7,6 +7,8 @@ use GuzzleHttp\Exception\ClientException;
 use ButterCMS\Model\Author;
 use ButterCMS\Model\Category;
 use ButterCMS\Model\Post;
+use ButterCMS\Model\PostResponse;
+use ButterCMS\Model\PostsResponse;
 
 class ButterCMS
 {
@@ -105,34 +107,20 @@ class ButterCMS
     public function getPost($postSlug)
     {
         $rawPost = $this->request('posts/' . $postSlug);
-        $post = new Post($rawPost['data']);
-        $post->setMeta($rawPost['meta']);
-        return $post;
+        return new PostResponse($rawPost);
     }
 
     public function getPosts($params = [])
     {
         $rawPosts = $this->request('posts', $params);
-        $posts = [];
-        foreach ($rawPosts['data'] as $rawPost) {
-            $post = new Post($rawPost);
-            $post->setMeta($rawPosts['meta']);
-            $posts[] = $post;
-        }
-        return $posts;
+        return new PostsResponse($rawPosts);
     }
 
     public function searchPosts($query, $params = [])
     {
         $params['query'] = $query;
         $rawPosts = $this->request('search', $params);
-        $posts = [];
-        foreach ($rawPosts['data'] as $rawPost) {
-            $post = new Post($rawPost);
-            $post->setMeta($rawPosts['meta']);
-            $posts[] = $post;
-        }
-        return $posts;
+        return new PostsResponse($rawPosts);
     }
 
     ///////////////
