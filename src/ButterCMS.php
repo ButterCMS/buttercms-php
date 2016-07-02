@@ -67,7 +67,7 @@ class ButterCMS
     public function getAuthor($authorSlug)
     {
         $rawAuthor = $this->request('authors/' . $authorSlug);
-        return new Author($rawAuthor['data']);
+        return $rawAuthor ? new Author($rawAuthor['data']) : false;
     }
 
     public function getAuthors($params = [])
@@ -87,7 +87,7 @@ class ButterCMS
     public function getCategory($categorySlug)
     {
         $rawCategory = $this->request('categories/' . $categorySlug);
-        return new Category($rawCategory['data']);
+        return $rawCategory ? new Category($rawCategory['data']) : false;
     }
 
     public function getCategories($params = [])
@@ -107,7 +107,7 @@ class ButterCMS
     public function getPost($postSlug)
     {
         $rawPost = $this->request('posts/' . $postSlug);
-        return new PostResponse($rawPost);
+        return $rawPost ? new PostResponse($rawPost) : false;
     }
 
     public function getPosts($params = [])
@@ -131,6 +131,6 @@ class ButterCMS
     {
         $params = ['keys' => implode(',', $keys)];
         $rawContentFields = $this->request('content', $params);
-        return $rawContentFields['data'];
+        return isset($rawContentFields['data']) ? $rawContentFields['data'] : false;
     }
 }
