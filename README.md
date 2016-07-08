@@ -1,7 +1,35 @@
-## ButterCMS PHP API Wrapper
-This wrapper is meant to enable PHP developers to quickly and easily get up and running with [ButterCMS](https://buttercms.com/). It is based of off the [API documentation](https://buttercms.com/docs/api/).
+# ButterCMS PHP API Wrapper
+
+This wrapper enables PHP developers to quickly and easily get up and running with [ButterCMS](https://buttercms.com/). It is based of off the [API documentation](https://buttercms.com/docs/api/).
+
+## Requirements
+
+PHP 5.3.0 and later.
+
+## Composer
+
+You can install the bindings via [Composer](http://getcomposer.org/). Run the following command:
+
+```bash
+composer require stripe/stripe-php
+```
+
+To use the bindings, use Composer's [autoload](https://getcomposer.org/doc/00-intro.md#autoloading):
+
+```php
+require_once('vendor/autoload.php');
+```
+
+## Manual Installation
+
+If you do not wish to use Composer, you can download the [latest release](https://github.com/stripe/stripe-php/releases). Then, to use the bindings, include the `init.php` file.
+
+```php
+require_once('/path/to/buttercms-php/src/ButterCMS.php');
+```
 
 ## Example Usage
+
 ```php
 use ButterCMS\ButterCMS;
 
@@ -26,6 +54,3 @@ $butterCms->getCategories(['include' => 'recent_posts']);
 // Content Fields - returns your fields turned in to a multidimensional array
 $butterCms->getContentFields(['headline', 'FAQ']);
 ```
-
-## Composer Support
-To install via Composer simply require `buttercms/api-wrapper` in your `composer.json` file.
