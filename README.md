@@ -22,7 +22,7 @@ require_once('vendor/autoload.php');
 
 ## Manual Installation
 
-If you do not wish to use Composer, you can download the [latest release](https://github.com/stripe/stripe-php/releases). Then, to use the bindings, include the `init.php` file.
+If you do not wish to use Composer, you can download the [latest release](https://github.com/buttercms/buttercms-php/releases). Then, to use the bindings, include the `src/ButterCMS.php` file.
 
 ```php
 require_once('/path/to/buttercms-php/src/ButterCMS.php');
