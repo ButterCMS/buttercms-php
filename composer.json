@@ -1,10 +1,10 @@
 {
-    "name": "buttercms/api-wrapper",
+    "name": "buttercms/buttercms-php",
     "description": "ButterCMS PHP API Wrapper",
     "authors": [
         {
-            "name": "Josh Holat",
-            "email": "jholat@gmail.com"
+            "name": "ButterCMS",
+            "email": "support@buttercms.com"
         }
     ],
     "minimum-stability": "dev",
