@@ -39,7 +39,10 @@ $butterCms = new ButterCMS('<auth_token>');
 $feed = $butterCms->getFeed('rss');
 
 // Posts
-$butterCms->getPost('post-slug');
+$response = $butterCms->getPost('post-slug');
+$post = $response->getPost();
+echo $post->getTitle();
+
 $butterCms->getPosts(['page' => 1]);
 $butterCms->searchPosts('query', ['page' => 1]);
 
