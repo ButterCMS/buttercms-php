@@ -54,6 +54,10 @@ $butterCms->getAuthors(['include' => 'recent_posts']);
 $butterCms->getCategory('category-slug');
 $butterCms->getCategories(['include' => 'recent_posts']);
 
+// Tags
+$butterCms->getTag('tag-slug');
+$butterCms->getTags();
+
 // Content Fields - returns your fields turned in to a multidimensional array
 $butterCms->getContentFields(['headline', 'FAQ']);
 ```

@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use ButterCMS\Model\Author;
 use ButterCMS\Model\Category;
+use ButterCMS\Model\Tag;
 use ButterCMS\Model\Post;
 use ButterCMS\Model\PostResponse;
 use ButterCMS\Model\PostsResponse;
@@ -99,6 +100,27 @@ class ButterCMS
         }
         return $categories;
     }
+
+    ///////////////
+    // Tags
+    ///////////////
+
+    public function getTag($tagSlug)
+    {
+        $rawTag = $this->request('tags/' . $tagSlug);
+        return $rawTag ? new Tag($rawTag['data']) : false;
+    }
+
+    public function getTags($params = [])
+    {
+        $rawTags = $this->request('tags', $params);
+        $tags = [];
+        foreach ($rawTags['data'] as $rawTag) {
+            $tags[] = new Tag($rawTag);
+        }
+        return $tags;
+    }
+
 
     ///////////////
     // Posts
