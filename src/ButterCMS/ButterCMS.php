@@ -27,7 +27,7 @@ class ButterCMS
         $this->client = new Client();
     }
 
-    protected function request($url, $params = [])
+    protected function request($url, $params = [], $tryCount = 0)
     {
         try {
             $params['auth_token'] = $this->authToken;
@@ -35,6 +35,10 @@ class ButterCMS
                 'query' => $params
             ]);
         } catch (ClientException $e) {
+            if ($tryCount < 1) {
+                return $this->request($url, $params, ++$tryCount);
+            }
+
             return false;
         }
 

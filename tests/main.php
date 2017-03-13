@@ -14,7 +14,6 @@ $response = $butterCms->fetchPost('test-post');
 $post = $response->getPost();
 echo $post->getTitle();
 
-
 $butterCms->fetchPosts(['page' => 1]);
 $butterCms->searchPosts('query', ['page' => 1]);
 
