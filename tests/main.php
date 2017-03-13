@@ -10,12 +10,12 @@ $butterCms = new ButterCMS('fe7098cde166d497fbac00bc5d1b94cc8ce51d0f');
 $feed = $butterCms->getFeed('rss');
 
 // Posts
-$response = $butterCms->getPost('test-post');
+$response = $butterCms->fetchPost('test-post');
 $post = $response->getPost();
 echo $post->getTitle();
 
 
-$butterCms->getPosts(['page' => 1]);
+$butterCms->fetchPosts(['page' => 1]);
 $butterCms->searchPosts('query', ['page' => 1]);
 
 // Authors

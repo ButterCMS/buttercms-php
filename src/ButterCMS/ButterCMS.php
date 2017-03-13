@@ -121,18 +121,17 @@ class ButterCMS
         return $tags;
     }
 
-
     ///////////////
     // Posts
     ///////////////
 
-    public function getPost($postSlug)
+    public function fetchPost($postSlug)
     {
         $rawPost = $this->request('posts/' . $postSlug);
         return $rawPost ? new PostResponse($rawPost) : false;
     }
 
-    public function getPosts($params = [])
+    public function fetchPosts($params = [])
     {
         $rawPosts = $this->request('posts', $params);
         return new PostsResponse($rawPosts);
