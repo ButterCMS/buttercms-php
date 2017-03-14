@@ -39,7 +39,7 @@ class ButterCMS
                 return $this->request($url, $params, ++$tryCount);
             }
 
-            return false;
+            throw $e;
         }
 
         $responseString = $response->getBody()->getContents();
