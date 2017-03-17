@@ -39,11 +39,27 @@ $butterCms = new ButterCMS('<auth_token>');
 $feed = $butterCms->getFeed('rss');
 
 // Posts
+$result = $butterCms->fetchPosts(['page' => 1]);
+
+$meta = $result->getMeta(); // Meta information like pagination
+print_r($meta);
+
+$posts = $result->getPosts(); // Get posts array off of result
+
+$post = $posts[0]; // Get the first post
+echo $post->getTitle(); // Access attributes using getXxxx() format.
+echo $post->getSlug();
+
+$author = $post->getAuthor(); // Access nested objects: Author, Tags, Categories like so
+echo $author->getFirstName();
+echo $author->getLastName();
+
+// Query for one post
 $response = $butterCms->fetchPost('post-slug');
 $post = $response->getPost();
 echo $post->getTitle();
 
-$butterCms->fetchPosts(['page' => 1]);
+// Search
 $butterCms->searchPosts('query', ['page' => 1]);
 
 // Authors
