@@ -18,12 +18,12 @@ $butterCms->fetchPosts(['page' => 1]);
 $butterCms->searchPosts('query', ['page' => 1]);
 
 // Authors
-$butterCms->getAuthor('author-slug');
-$butterCms->getAuthors(['include' => 'recent_posts']);
+$butterCms->fetchAuthor('author-slug');
+$butterCms->fetchAuthors(['include' => 'recent_posts']);
 
 // Categories
-$butterCms->getCategory('category-slug');
-$butterCms->getCategories(['include' => 'recent_posts']);
+$butterCms->fetchCategory('category-slug');
+$butterCms->fetchCategories(['include' => 'recent_posts']);
 
 // Content Fields - returns your fields turned in to a multidimensional array
-$butterCms->getContentFields(['headline', 'FAQ']);
+$butterCms->fetchContentFields(['headline', 'FAQ']);
