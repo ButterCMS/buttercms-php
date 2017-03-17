@@ -55,7 +55,7 @@ class ButterCMS
     // Feeds
     ///////////////
 
-    public function getFeed($type)
+    public function fetchFeed($type)
     {
         $feedData = $this->request('feeds/' . $type);
         if (empty($feedData['data'])) {
@@ -69,13 +69,13 @@ class ButterCMS
     // Authors
     ///////////////
 
-    public function getAuthor($authorSlug)
+    public function fetchAuthor($authorSlug)
     {
         $rawAuthor = $this->request('authors/' . $authorSlug);
         return $rawAuthor ? new Author($rawAuthor['data']) : false;
     }
 
-    public function getAuthors($params = [])
+    public function fetchAuthors($params = [])
     {
         $rawAuthors = $this->request('authors', $params);
         $authors = [];
@@ -89,13 +89,13 @@ class ButterCMS
     // Categories
     ///////////////
 
-    public function getCategory($categorySlug)
+    public function fetchCategory($categorySlug)
     {
         $rawCategory = $this->request('categories/' . $categorySlug);
         return $rawCategory ? new Category($rawCategory['data']) : false;
     }
 
-    public function getCategories($params = [])
+    public function fetchCategories($params = [])
     {
         $rawCategories = $this->request('categories', $params);
         $categories = [];
@@ -109,13 +109,13 @@ class ButterCMS
     // Tags
     ///////////////
 
-    public function getTag($tagSlug)
+    public function fetchTag($tagSlug)
     {
         $rawTag = $this->request('tags/' . $tagSlug);
         return $rawTag ? new Tag($rawTag['data']) : false;
     }
 
-    public function getTags($params = [])
+    public function fetchTags($params = [])
     {
         $rawTags = $this->request('tags', $params);
         $tags = [];
@@ -152,7 +152,7 @@ class ButterCMS
     // Content Fields
     ///////////////
 
-    public function getContentFields(array $keys)
+    public function fetchContentFields(array $keys)
     {
         $params = ['keys' => implode(',', $keys)];
         $rawContentFields = $this->request('content', $params);
