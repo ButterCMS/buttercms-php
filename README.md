@@ -54,6 +54,11 @@ $author = $post->getAuthor(); // Access nested objects: Author, Tags, Categories
 echo $author->getFirstName();
 echo $author->getLastName();
 
+// Loop through posts
+foreach ($posts as $post) {
+    echo $post->getTitle();
+}
+
 // Query for one post
 $response = $butterCms->fetchPost('post-slug');
 $post = $response->getPost();
