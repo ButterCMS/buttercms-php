@@ -36,10 +36,10 @@ use ButterCMS\ButterCMS;
 $butterCms = new ButterCMS('<auth_token>');
 
 // Feeds - returns a SimpleXMLElement object
-$feed = $butterCms->getFeed('rss');
+$feed = $butterCms->fetchFeed('rss');
 
 // Posts
-$result = $butterCms->getPosts(['page' => 1]);
+$result = $butterCms->fetchPosts(['page' => 1]);
 
 $meta = $result->getMeta(); // Meta information like pagination
 print_r($meta);
@@ -54,8 +54,13 @@ $author = $post->getAuthor(); // Access nested objects: Author, Tags, Categories
 echo $author->getFirstName();
 echo $author->getLastName();
 
+// Loop through posts
+foreach ($posts as $post) {
+    echo $post->getTitle();
+}
+
 // Query for one post
-$response = $butterCms->getPost('post-slug');
+$response = $butterCms->fetchPost('post-slug');
 $post = $response->getPost();
 echo $post->getTitle();
 
@@ -63,17 +68,17 @@ echo $post->getTitle();
 $butterCms->searchPosts('query', ['page' => 1]);
 
 // Authors
-$butterCms->getAuthor('author-slug');
-$butterCms->getAuthors(['include' => 'recent_posts']);
+$butterCms->fetchAuthor('author-slug');
+$butterCms->fetchAuthors(['include' => 'recent_posts']);
 
 // Categories
-$butterCms->getCategory('category-slug');
-$butterCms->getCategories(['include' => 'recent_posts']);
+$butterCms->fetchCategory('category-slug');
+$butterCms->fetchCategories(['include' => 'recent_posts']);
 
 // Tags
-$butterCms->getTag('tag-slug');
-$butterCms->getTags();
+$butterCms->fetchTag('tag-slug');
+$butterCms->fetchTags();
 
 // Content Fields - returns your fields turned in to a multidimensional array
-$butterCms->getContentFields(['headline', 'FAQ']);
+$butterCms->fetchContentFields(['headline', 'FAQ']);
 ```

@@ -10,21 +10,20 @@ $butterCms = new ButterCMS('fe7098cde166d497fbac00bc5d1b94cc8ce51d0f');
 $feed = $butterCms->getFeed('rss');
 
 // Posts
-$response = $butterCms->getPost('test-post');
+$response = $butterCms->fetchPost('test-post');
 $post = $response->getPost();
 echo $post->getTitle();
 
-
-$butterCms->getPosts(['page' => 1]);
+$butterCms->fetchPosts(['page' => 1]);
 $butterCms->searchPosts('query', ['page' => 1]);
 
 // Authors
-$butterCms->getAuthor('author-slug');
-$butterCms->getAuthors(['include' => 'recent_posts']);
+$butterCms->fetchAuthor('author-slug');
+$butterCms->fetchAuthors(['include' => 'recent_posts']);
 
 // Categories
-$butterCms->getCategory('category-slug');
-$butterCms->getCategories(['include' => 'recent_posts']);
+$butterCms->fetchCategory('category-slug');
+$butterCms->fetchCategories(['include' => 'recent_posts']);
 
 // Content Fields - returns your fields turned in to a multidimensional array
-$butterCms->getContentFields(['headline', 'FAQ']);
+$butterCms->fetchContentFields(['headline', 'FAQ']);
