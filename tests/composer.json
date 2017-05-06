@@ -6,6 +6,6 @@
         }
     ],
     "require": {
-        "buttercms/api-wrapper": "dev-master"
+        "buttercms/buttercms-php": "dev-master"
     }
 }
