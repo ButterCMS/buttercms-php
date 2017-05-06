@@ -152,9 +152,10 @@ class ButterCMS
     // Content Fields
     ///////////////
 
-    public function fetchContentFields(array $keys)
+    public function fetchContentFields(array $keys, array $options = [])
     {
         $params = ['keys' => implode(',', $keys)];
+        $params = array_merge($params, $options);
         $rawContentFields = $this->request('content/', $params);
         return isset($rawContentFields['data']) ? $rawContentFields['data'] : false;
     }

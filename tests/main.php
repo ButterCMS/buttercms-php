@@ -4,10 +4,10 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use ButterCMS\ButterCMS;
 
-$butterCms = new ButterCMS('fe7098cde166d497fbac00bc5d1b94cc8ce51d0f');
+$butterCms = new ButterCMS('10de91e331dd67ae3e4ee5c383ec8ea8a9427f48');
 
 // Feeds - returns a SimpleXMLElement object
-$feed = $butterCms->getFeed('rss');
+$feed = $butterCms->fetchFeed('rss');
 
 // Posts
 $response = $butterCms->fetchPost('test-post');
@@ -18,12 +18,14 @@ $butterCms->fetchPosts(['page' => 1]);
 $butterCms->searchPosts('query', ['page' => 1]);
 
 // Authors
-$butterCms->fetchAuthor('author-slug');
+$butterCms->fetchAuthor('api-test');
 $butterCms->fetchAuthors(['include' => 'recent_posts']);
 
 // Categories
-$butterCms->fetchCategory('category-slug');
+$butterCms->fetchCategory('test-category');
 $butterCms->fetchCategories(['include' => 'recent_posts']);
 
 // Content Fields - returns your fields turned in to a multidimensional array
-$butterCms->fetchContentFields(['headline', 'FAQ']);
+$fields = $butterCms->fetchContentFields(['homepage_headline', 'faq'], ['locale' => 'es']);
+
+var_dump($fields);
