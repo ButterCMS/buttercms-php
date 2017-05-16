@@ -82,3 +82,7 @@ $butterCms->fetchTags();
 // Content Fields - returns your fields turned in to a multidimensional array
 $butterCms->fetchContentFields(['headline', 'FAQ']);
 ```
+
+### Other
+
+View PHP [Blog engine](https://buttercms.com/php-blog-engine/) and [Full CMS](https://buttercms.com/php-cms/) for other examples of using ButterCMS with PHP.
