@@ -7,6 +7,9 @@ use GuzzleHttp\Exception\ClientException;
 use ButterCMS\Model\Author;
 use ButterCMS\Model\Category;
 use ButterCMS\Model\Tag;
+use ButterCMS\Model\Page;
+use ButterCMS\Model\PageResponse;
+use ButterCMS\Model\PagesResponse;
 use ButterCMS\Model\Post;
 use ButterCMS\Model\PostResponse;
 use ButterCMS\Model\PostsResponse;
@@ -32,7 +35,7 @@ class ButterCMS
         try {
             $params['auth_token'] = $this->authToken;
             $response = $this->client->get(self::API_ROOT_URL . $url, [
-                'query' => $params
+                'query' => $params,
             ]);
         } catch (ClientException $e) {
             if ($tryCount < 1) {
@@ -123,6 +126,22 @@ class ButterCMS
             $tags[] = new Tag($rawTag);
         }
         return $tags;
+    }
+
+    ///////////////
+    // Pages
+    ///////////////
+
+    public function fetchPage($type, $slug, $params = [])
+    {
+        $rawPage = $this->request('pages/' . $type . '/' . $slug . '/', $params);
+        return $rawPage ? new PageResponse($rawPage) : false;
+    }
+
+    public function fetchPages($type, $params = [])
+    {
+        $rawPages = $this->request('pages/' . $type . '/', $params);
+        return new PagesResponse($rawPages);
     }
 
     ///////////////

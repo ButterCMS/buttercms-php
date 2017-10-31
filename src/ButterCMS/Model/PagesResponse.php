@@ -2,18 +2,18 @@
 
 namespace ButterCMS\Model;
 
-class PostsResponse extends Model
+class PagesResponse extends Model
 {
     protected
-        $posts;
+        $pages;
 
     public function __construct(array $dataArray)
     {
-        $this->posts = [];
+        $this->pages = [];
 
         if (!empty($dataArray['data'])) {
-            foreach ($dataArray['data'] as $postsData) {
-                $this->posts[] = new Post($postsData);
+            foreach ($dataArray['data'] as $pageData) {
+                $this->pages[] = new Page($pageData);
             }
             unset($dataArray['data']);
         }
