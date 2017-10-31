@@ -27,7 +27,11 @@ class ButterCMS
     {
         $this->authToken = $authToken;
 
-        $this->client = new Client();
+        $this->client = new Client([
+            'headers' => [
+                'X-Butter-Client' => 'PHP/2.2.1',
+            ],
+        ]);
     }
 
     protected function request($url, $params = [], $tryCount = 0)
