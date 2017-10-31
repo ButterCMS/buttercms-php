@@ -78,7 +78,7 @@ class ButterCMS
         return $rawAuthor ? new Author($rawAuthor['data']) : false;
     }
 
-    public function fetchAuthors($params = [])
+    public function fetchAuthors(array $params = [])
     {
         $rawAuthors = $this->request('authors/', $params);
         $authors = [];
@@ -98,7 +98,7 @@ class ButterCMS
         return $rawCategory ? new Category($rawCategory['data']) : false;
     }
 
-    public function fetchCategories($params = [])
+    public function fetchCategories(array $params = [])
     {
         $rawCategories = $this->request('categories/', $params);
         $categories = [];
@@ -118,7 +118,7 @@ class ButterCMS
         return $rawTag ? new Tag($rawTag['data']) : false;
     }
 
-    public function fetchTags($params = [])
+    public function fetchTags(array $params = [])
     {
         $rawTags = $this->request('tags/', $params);
         $tags = [];
@@ -132,13 +132,13 @@ class ButterCMS
     // Pages
     ///////////////
 
-    public function fetchPage($type, $slug, $params = [])
+    public function fetchPage($type, $slug, array $params = [])
     {
         $rawPage = $this->request('pages/' . $type . '/' . $slug . '/', $params);
         return $rawPage ? new PageResponse($rawPage) : false;
     }
 
-    public function fetchPages($type, $params = [])
+    public function fetchPages($type, array $params = [])
     {
         $rawPages = $this->request('pages/' . $type . '/', $params);
         return new PagesResponse($rawPages);
@@ -154,13 +154,13 @@ class ButterCMS
         return $rawPost ? new PostResponse($rawPost) : false;
     }
 
-    public function fetchPosts($params = [])
+    public function fetchPosts(array $params = [])
     {
         $rawPosts = $this->request('posts/', $params);
         return new PostsResponse($rawPosts);
     }
 
-    public function searchPosts($query, $params = [])
+    public function searchPosts($query, array $params = [])
     {
         $params['query'] = $query;
         $rawPosts = $this->request('search/', $params);
