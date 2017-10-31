@@ -29,7 +29,7 @@ class ButterCMS
 
         $this->client = new Client([
             'headers' => [
-                'X-Butter-Client' => 'PHP/2.2.1',
+                'X-Butter-Client' => 'PHP/2.3.0',
             ],
         ]);
     }
