@@ -3,7 +3,7 @@
 namespace ButterCMS;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\BadResponseException;
 use ButterCMS\Model\Author;
 use ButterCMS\Model\Category;
 use ButterCMS\Model\Tag;
@@ -41,8 +41,9 @@ class ButterCMS
             $response = $this->client->get(self::API_ROOT_URL . $url, [
                 'query' => $params,
             ]);
-        } catch (ClientException $e) {
-            if ($tryCount < 1) {
+        } catch (BadResponseException $e) {
+            $httpCode = (int)$e->getResponse()->getStatusCode();
+            if ($tryCount < 1 && $httpCode !== 404) {
                 return $this->request($url, $params, ++$tryCount);
             }
 
