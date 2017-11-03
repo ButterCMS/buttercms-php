@@ -2,7 +2,7 @@
 
 namespace ButterCMS\Model;
 
-class PostsResponse extends Model
+class PostsResponse extends MetaResponse
 {
     protected
         $posts;
