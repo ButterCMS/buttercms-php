@@ -17,6 +17,7 @@ use ButterCMS\Model\PostsResponse;
 class ButterCMS
 {
     const
+        VERSION = '2.3.0',
         API_ROOT_URL = 'https://api.buttercms.com/v2/';
 
     protected
@@ -29,7 +30,7 @@ class ButterCMS
 
         $this->client = new Client([
             'headers' => [
-                'X-Butter-Client' => 'PHP/2.3.0',
+                'X-Butter-Client' => 'PHP/' . self::VERSION,
             ],
         ]);
     }
