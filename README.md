@@ -75,12 +75,27 @@ $butterCms->fetchAuthors(['include' => 'recent_posts']);
 $butterCms->fetchCategory('category-slug');
 $butterCms->fetchCategories(['include' => 'recent_posts']);
 
+// Pages
+$butterCms->fetchPage('about', 'welcome-to-the-site');
+$pagesResponse = $butterCms->fetchPages('news', ['breaking-news' => true]);
+var_dump($pagesResponse->getMeta()['count']);
+foreach ($pagesResponse->getPages() as $page) {
+    echo $page->getSlug();
+}
+
 // Tags
 $butterCms->fetchTag('tag-slug');
 $butterCms->fetchTags();
 
 // Content Fields - returns your fields turned in to a multidimensional array
 $butterCms->fetchContentFields(['headline', 'FAQ']);
+
+// Error Handling
+try {
+    $butterCms->fetchPage('about', 'non-existent-page');
+} catch (GuzzleHttp\Exception\BadResponseException $e) {
+    var_dump($e->getMessage());
+}
 ```
 
 ### Other
