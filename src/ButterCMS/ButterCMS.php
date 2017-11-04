@@ -66,10 +66,6 @@ class ButterCMS
     public function fetchFeed($type)
     {
         $feedData = $this->request('feeds/' . $type . '/');
-        if (empty($feedData['data'])) {
-            return false;
-        }
-
         return new \SimpleXMLElement($feedData['data']);
     }
 
