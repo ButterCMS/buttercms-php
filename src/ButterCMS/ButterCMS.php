@@ -8,7 +8,6 @@ use ButterCMS\Model\Author;
 use ButterCMS\Model\Category;
 use ButterCMS\Model\Tag;
 use ButterCMS\Model\Page;
-use ButterCMS\Model\PageResponse;
 use ButterCMS\Model\PagesResponse;
 use ButterCMS\Model\Post;
 use ButterCMS\Model\PostResponse;
@@ -57,7 +56,7 @@ class ButterCMS
             return $dataArray;
         }
 
-        return false;
+        throw new \UnexpectedValueException('API response was invalid JSON: ' . $responseString);
     }
 
     ///////////////
@@ -81,7 +80,7 @@ class ButterCMS
     public function fetchAuthor($authorSlug)
     {
         $rawAuthor = $this->request('authors/' . $authorSlug . '/');
-        return $rawAuthor ? new Author($rawAuthor['data']) : false;
+        return new Author($rawAuthor['data']);
     }
 
     public function fetchAuthors(array $params = [])
@@ -101,7 +100,7 @@ class ButterCMS
     public function fetchCategory($categorySlug)
     {
         $rawCategory = $this->request('categories/' . $categorySlug . '/');
-        return $rawCategory ? new Category($rawCategory['data']) : false;
+        return new Category($rawCategory['data']);
     }
 
     public function fetchCategories(array $params = [])
@@ -121,7 +120,7 @@ class ButterCMS
     public function fetchTag($tagSlug)
     {
         $rawTag = $this->request('tags/' . $tagSlug . '/');
-        return $rawTag ? new Tag($rawTag['data']) : false;
+        return new Tag($rawTag['data']);
     }
 
     public function fetchTags(array $params = [])
@@ -141,7 +140,7 @@ class ButterCMS
     public function fetchPage($type, $slug, array $params = [])
     {
         $rawPage = $this->request('pages/' . $type . '/' . $slug . '/', $params);
-        return $rawPage ? new PageResponse($rawPage) : false;
+        return new Page($rawPage['data']);
     }
 
     public function fetchPages($type, array $params = [])
@@ -157,7 +156,7 @@ class ButterCMS
     public function fetchPost($postSlug)
     {
         $rawPost = $this->request('posts/' . $postSlug . '/');
-        return $rawPost ? new PostResponse($rawPost) : false;
+        return new PostResponse($rawPost);
     }
 
     public function fetchPosts(array $params = [])

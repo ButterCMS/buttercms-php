@@ -76,8 +76,8 @@ $butterCms->fetchCategory('category-slug');
 $butterCms->fetchCategories(['include' => 'recent_posts']);
 
 // Pages
-$pageResponse = $butterCms->fetchPage('about', 'welcome-to-the-site');
-echo $pageResponse->getPage()->getFields()['some-field'];
+$page = $butterCms->fetchPage('about', 'welcome-to-the-site');
+echo $page->getFields()['some-field'];
 
 $pagesResponse = $butterCms->fetchPages('news', ['breaking-news' => true]);
 var_dump($pagesResponse->getMeta()['count']);
@@ -96,6 +96,10 @@ $butterCms->fetchContentFields(['headline', 'FAQ']);
 try {
     $butterCms->fetchPage('about', 'non-existent-page');
 } catch (GuzzleHttp\Exception\BadResponseException $e) {
+    // Happens for any non-200 response from the API
+    var_dump($e->getMessage());
+} catch (\UnexpectedValueException $e) {
+    // Happens if there is an issue parsing the JSON response
     var_dump($e->getMessage());
 }
 ```
