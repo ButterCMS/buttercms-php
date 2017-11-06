@@ -3,10 +3,12 @@
 namespace ButterCMS;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\BadResponseException;
 use ButterCMS\Model\Author;
 use ButterCMS\Model\Category;
 use ButterCMS\Model\Tag;
+use ButterCMS\Model\Page;
+use ButterCMS\Model\PagesResponse;
 use ButterCMS\Model\Post;
 use ButterCMS\Model\PostResponse;
 use ButterCMS\Model\PostsResponse;
@@ -14,6 +16,7 @@ use ButterCMS\Model\PostsResponse;
 class ButterCMS
 {
     const
+        VERSION = '2.3.0',
         API_ROOT_URL = 'https://api.buttercms.com/v2/';
 
     protected
@@ -24,7 +27,11 @@ class ButterCMS
     {
         $this->authToken = $authToken;
 
-        $this->client = new Client();
+        $this->client = new Client([
+            'headers' => [
+                'X-Butter-Client' => 'PHP/' . self::VERSION,
+            ],
+        ]);
     }
 
     protected function request($url, $params = [], $tryCount = 0)
@@ -32,10 +39,11 @@ class ButterCMS
         try {
             $params['auth_token'] = $this->authToken;
             $response = $this->client->get(self::API_ROOT_URL . $url, [
-                'query' => $params
+                'query' => $params,
             ]);
-        } catch (ClientException $e) {
-            if ($tryCount < 1) {
+        } catch (BadResponseException $e) {
+            $httpCode = (int)$e->getResponse()->getStatusCode();
+            if ($tryCount < 1 && $httpCode !== 404) {
                 return $this->request($url, $params, ++$tryCount);
             }
 
@@ -48,7 +56,7 @@ class ButterCMS
             return $dataArray;
         }
 
-        return false;
+        throw new \UnexpectedValueException('API response was invalid JSON: ' . $responseString);
     }
 
     ///////////////
@@ -58,10 +66,6 @@ class ButterCMS
     public function fetchFeed($type)
     {
         $feedData = $this->request('feeds/' . $type . '/');
-        if (empty($feedData['data'])) {
-            return false;
-        }
-
         return new \SimpleXMLElement($feedData['data']);
     }
 
@@ -72,10 +76,10 @@ class ButterCMS
     public function fetchAuthor($authorSlug)
     {
         $rawAuthor = $this->request('authors/' . $authorSlug . '/');
-        return $rawAuthor ? new Author($rawAuthor['data']) : false;
+        return new Author($rawAuthor['data']);
     }
 
-    public function fetchAuthors($params = [])
+    public function fetchAuthors(array $params = [])
     {
         $rawAuthors = $this->request('authors/', $params);
         $authors = [];
@@ -92,10 +96,10 @@ class ButterCMS
     public function fetchCategory($categorySlug)
     {
         $rawCategory = $this->request('categories/' . $categorySlug . '/');
-        return $rawCategory ? new Category($rawCategory['data']) : false;
+        return new Category($rawCategory['data']);
     }
 
-    public function fetchCategories($params = [])
+    public function fetchCategories(array $params = [])
     {
         $rawCategories = $this->request('categories/', $params);
         $categories = [];
@@ -112,10 +116,10 @@ class ButterCMS
     public function fetchTag($tagSlug)
     {
         $rawTag = $this->request('tags/' . $tagSlug . '/');
-        return $rawTag ? new Tag($rawTag['data']) : false;
+        return new Tag($rawTag['data']);
     }
 
-    public function fetchTags($params = [])
+    public function fetchTags(array $params = [])
     {
         $rawTags = $this->request('tags/', $params);
         $tags = [];
@@ -126,22 +130,38 @@ class ButterCMS
     }
 
     ///////////////
+    // Pages
+    ///////////////
+
+    public function fetchPage($type, $slug, array $params = [])
+    {
+        $rawPage = $this->request('pages/' . $type . '/' . $slug . '/', $params);
+        return new Page($rawPage['data']);
+    }
+
+    public function fetchPages($type, array $params = [])
+    {
+        $rawPages = $this->request('pages/' . $type . '/', $params);
+        return new PagesResponse($rawPages);
+    }
+
+    ///////////////
     // Posts
     ///////////////
 
     public function fetchPost($postSlug)
     {
         $rawPost = $this->request('posts/' . $postSlug . '/');
-        return $rawPost ? new PostResponse($rawPost) : false;
+        return new PostResponse($rawPost);
     }
 
-    public function fetchPosts($params = [])
+    public function fetchPosts(array $params = [])
     {
         $rawPosts = $this->request('posts/', $params);
         return new PostsResponse($rawPosts);
     }
 
-    public function searchPosts($query, $params = [])
+    public function searchPosts($query, array $params = [])
     {
         $params['query'] = $query;
         $rawPosts = $this->request('search/', $params);

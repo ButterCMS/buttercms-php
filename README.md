@@ -75,12 +75,37 @@ $butterCms->fetchAuthors(['include' => 'recent_posts']);
 $butterCms->fetchCategory('category-slug');
 $butterCms->fetchCategories(['include' => 'recent_posts']);
 
+// Pages
+$page = $butterCms->fetchPage('about', 'welcome-to-the-site');
+
+// These are equivalent
+echo $page->getFields()['some-field'];
+echo $page->getField('some-field');
+
+$pagesResponse = $butterCms->fetchPages('news', ['breaking-news' => true]);
+var_dump($pagesResponse->getMeta()['count']);
+foreach ($pagesResponse->getPages() as $page) {
+    echo $page->getSlug();
+}
+
 // Tags
 $butterCms->fetchTag('tag-slug');
 $butterCms->fetchTags();
 
 // Content Fields - returns your fields turned in to a multidimensional array
-$butterCms->fetchContentFields(['headline', 'FAQ']);
+$butterCms->fetchContentFields(['headline', 'FAQ'], ['test' => '1']);
+// This results in https://api.buttercms.com/v2/content/?keys=headline,FAQ&test=1&auth_token=
+
+// Error Handling
+try {
+    $butterCms->fetchPage('about', 'non-existent-page');
+} catch (GuzzleHttp\Exception\BadResponseException $e) {
+    // Happens for any non-200 response from the API
+    var_dump($e->getMessage());
+} catch (\UnexpectedValueException $e) {
+    // Happens if there is an issue parsing the JSON response
+    var_dump($e->getMessage());
+}
 ```
 
 ### Other

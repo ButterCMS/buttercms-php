@@ -2,15 +2,19 @@
 
 namespace ButterCMS\Model;
 
-class PostResponse extends MetaResponse
+class PagesResponse extends MetaResponse
 {
     protected
-        $post;
+        $pages;
 
     public function __construct(array $dataArray)
     {
+        $this->pages = [];
+
         if (!empty($dataArray['data'])) {
-            $this->post = new Post($dataArray['data']);
+            foreach ($dataArray['data'] as $pageData) {
+                $this->pages[] = new Page($pageData);
+            }
             unset($dataArray['data']);
         }
 

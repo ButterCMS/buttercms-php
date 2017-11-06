@@ -2,15 +2,16 @@
 
 namespace ButterCMS\Model;
 
-class PostsResponse extends Model
+class PostsResponse extends MetaResponse
 {
     protected
         $posts;
 
     public function __construct(array $dataArray)
     {
+        $this->posts = [];
+
         if (!empty($dataArray['data'])) {
-            $this->posts = [];
             foreach ($dataArray['data'] as $postsData) {
                 $this->posts[] = new Post($postsData);
             }
