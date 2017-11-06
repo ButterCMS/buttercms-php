@@ -93,7 +93,8 @@ $butterCms->fetchTag('tag-slug');
 $butterCms->fetchTags();
 
 // Content Fields - returns your fields turned in to a multidimensional array
-$butterCms->fetchContentFields(['headline', 'FAQ']);
+$butterCms->fetchContentFields(['headline', 'FAQ'], ['test' => '1']);
+// This results in https://api.buttercms.com/v2/content/?keys=headline,FAQ&test=1&auth_token=
 
 // Error Handling
 try {
