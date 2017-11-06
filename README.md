@@ -77,7 +77,10 @@ $butterCms->fetchCategories(['include' => 'recent_posts']);
 
 // Pages
 $page = $butterCms->fetchPage('about', 'welcome-to-the-site');
+
+// These are equivalent
 echo $page->getFields()['some-field'];
+echo $page->getField('some-field');
 
 $pagesResponse = $butterCms->fetchPages('news', ['breaking-news' => true]);
 var_dump($pagesResponse->getMeta()['count']);
