@@ -16,7 +16,7 @@ use ButterCMS\Model\PostsResponse;
 class ButterCMS
 {
     const
-        VERSION = '2.3.0',
+        VERSION = '2.3.1',
         API_ROOT_URL = 'https://api.buttercms.com/v2/';
 
     protected
