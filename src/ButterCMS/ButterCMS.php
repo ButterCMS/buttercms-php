@@ -16,7 +16,7 @@ use ButterCMS\Model\PostsResponse;
 class ButterCMS
 {
     const
-        VERSION = '2.3.0',
+        VERSION = '2.3.1',
         API_ROOT_URL = 'https://api.buttercms.com/v2/';
 
     protected
@@ -36,6 +36,14 @@ class ButterCMS
 
     protected function request($url, $params = [], $tryCount = 0)
     {
+        // Guzzle uses http_build_query() which will convert boolean true to "1"
+        // instead of "true" in the GET parameters
+        array_walk($params, function (&$item) {
+            if (is_bool($item)) {
+                $item = true === $item ? "true" : "false";
+            }
+        });
+
         try {
             $params['auth_token'] = $this->authToken;
             $response = $this->client->get(self::API_ROOT_URL . $url, [
