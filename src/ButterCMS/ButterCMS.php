@@ -36,6 +36,14 @@ class ButterCMS
 
     protected function request($url, $params = [], $tryCount = 0)
     {
+        // Guzzle uses http_build_query() which will convert boolean true to "1"
+        // instead of "true" in the GET parameters
+        array_walk($params, function (&$item) {
+            if (is_bool($item)) {
+                $item = true === $item ? "true" : "false";
+            }
+        });
+
         try {
             $params['auth_token'] = $this->authToken;
             $response = $this->client->get(self::API_ROOT_URL . $url, [
