@@ -28,15 +28,59 @@ If you do not wish to use Composer, you can download the [latest release](https:
 require_once('/path/to/buttercms-php/src/ButterCMS.php');
 ```
 
-## Example Usage
+## Pages
 
 ```php
 use ButterCMS\ButterCMS;
 
 $butterCms = new ButterCMS('<auth_token>');
 
-// Feeds - returns a SimpleXMLElement object
-$feed = $butterCms->fetchFeed('rss');
+$page = $butterCms->fetchPage('about', 'welcome-to-the-site');
+
+// These are equivalent
+echo $page->getFields()['some-field'];
+echo $page->getField('some-field');
+
+$pagesResponse = $butterCms->fetchPages('news', ['breaking-news' => true]);
+var_dump($pagesResponse->getMeta()['count']);
+foreach ($pagesResponse->getPages() as $page) {
+    echo $page->getSlug();
+}
+// Error Handling
+try {
+    $butterCms->fetchPage('about', 'non-existent-page');
+} catch (GuzzleHttp\Exception\BadResponseException $e) {
+    // Happens for any non-200 response from the API
+    var_dump($e->getMessage());
+} catch (\UnexpectedValueException $e) {
+    // Happens if there is an issue parsing the JSON response
+    var_dump($e->getMessage());
+}
+```
+
+## Content Fields
+
+```php
+use ButterCMS\ButterCMS;
+
+$butterCms = new ButterCMS('<auth_token>');
+
+// Returns your fields turned in to a multidimensional array
+$butterCms->fetchContentFields(['headline', 'FAQ'])
+
+// Localization
+$butterCms->fetchContentFields(['headline', 'FAQ'], ['locale' => 'en']);
+
+// Test Mode
+$butterCms->fetchContentFields(['headline', 'FAQ'], ['test' => '1']);
+```
+
+## Blog Engine
+
+```php
+use ButterCMS\ButterCMS;
+
+$butterCms = new ButterCMS('<auth_token>');
 
 // Posts
 $result = $butterCms->fetchPosts(['page' => 1]);
@@ -64,9 +108,6 @@ $response = $butterCms->fetchPost('post-slug');
 $post = $response->getPost();
 echo $post->getTitle();
 
-// Search
-$butterCms->searchPosts('query', ['page' => 1]);
-
 // Authors
 $butterCms->fetchAuthor('author-slug');
 $butterCms->fetchAuthors(['include' => 'recent_posts']);
@@ -75,38 +116,17 @@ $butterCms->fetchAuthors(['include' => 'recent_posts']);
 $butterCms->fetchCategory('category-slug');
 $butterCms->fetchCategories(['include' => 'recent_posts']);
 
-// Pages
-$page = $butterCms->fetchPage('about', 'welcome-to-the-site');
-
-// These are equivalent
-echo $page->getFields()['some-field'];
-echo $page->getField('some-field');
-
-$pagesResponse = $butterCms->fetchPages('news', ['breaking-news' => true]);
-var_dump($pagesResponse->getMeta()['count']);
-foreach ($pagesResponse->getPages() as $page) {
-    echo $page->getSlug();
-}
-
 // Tags
 $butterCms->fetchTag('tag-slug');
 $butterCms->fetchTags();
 
-// Content Fields - returns your fields turned in to a multidimensional array
-$butterCms->fetchContentFields(['headline', 'FAQ'], ['test' => '1']);
-// This results in https://api.buttercms.com/v2/content/?keys=headline,FAQ&test=1&auth_token=
+// Feeds - returns a SimpleXMLElement object
+$feed = $butterCms->fetchFeed('rss');
 
-// Error Handling
-try {
-    $butterCms->fetchPage('about', 'non-existent-page');
-} catch (GuzzleHttp\Exception\BadResponseException $e) {
-    // Happens for any non-200 response from the API
-    var_dump($e->getMessage());
-} catch (\UnexpectedValueException $e) {
-    // Happens if there is an issue parsing the JSON response
-    var_dump($e->getMessage());
-}
+// Search
+$butterCms->searchPosts('query', ['page' => 1]);
 ```
+
 
 ### Other
 
