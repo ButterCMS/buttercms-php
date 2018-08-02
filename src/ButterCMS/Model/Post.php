@@ -17,6 +17,7 @@ class Post extends Model
         $meta_description,
         $author,
         $categories,
+        $tags,
         $featured_image;
 
     public function __construct(array $data)
@@ -32,6 +33,14 @@ class Post extends Model
                 $this->categories[] = new Category($categoryData);
             }
             unset($data['categories']);
+        }
+
+        if (!empty($data['tags'])) {
+            $this->tags = [];
+            foreach ($data['tags'] as $tagData) {
+                $this->tags[] = new Tag($tagData);
+            }
+            unset($data['tags']);
         }
 
         parent::__construct($data);
