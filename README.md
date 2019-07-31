@@ -30,6 +30,8 @@ require_once('/path/to/buttercms-php/src/ButterCMS.php');
 
 ## Pages
 
+For a list of `params` see the [API documentation](https://buttercms.com/docs/api/?php#pages)
+
 ```php
 use ButterCMS\ButterCMS;
 
@@ -58,24 +60,20 @@ try {
 }
 ```
 
-## Content Fields
+## Collections
+
+For a list of `params` see the [API documentation](https://buttercms.com/docs/api/?php#retrieve-a-collection)
 
 ```php
 use ButterCMS\ButterCMS;
 
 $butterCms = new ButterCMS('<auth_token>');
-
-// Returns your fields turned in to a multidimensional array
-$butterCms->fetchContentFields(['headline', 'FAQ'])
-
-// Localization
-$butterCms->fetchContentFields(['headline', 'FAQ'], ['locale' => 'en']);
-
-// Test Mode
-$butterCms->fetchContentFields(['headline', 'FAQ'], ['test' => '1']);
+$butterCms->fetchContentFields(['collection_key'], ['locale' => 'en'])
 ```
 
 ## Blog Engine
+
+For a list of `params` see the [API documentation](https://buttercms.com/docs/api/?php#blog-engine)
 
 ```php
 use ButterCMS\ButterCMS;
