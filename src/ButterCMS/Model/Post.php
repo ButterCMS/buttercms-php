@@ -18,7 +18,8 @@ class Post extends Model
         $author,
         $categories,
         $tags,
-        $featured_image;
+        $featured_image,
+        $featured_image_alt;
 
     public function __construct(array $data)
     {
