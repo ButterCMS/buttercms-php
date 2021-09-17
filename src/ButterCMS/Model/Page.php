@@ -7,6 +7,8 @@ class Page extends Model
     protected
         $slug,
         $page_type,
+        $published,
+        $updated,
         $fields;
 
     public function getField($fieldName, $default = null)
