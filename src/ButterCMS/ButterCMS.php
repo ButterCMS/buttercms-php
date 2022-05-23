@@ -30,6 +30,7 @@ class ButterCMS
         $this->client = new Client([
             'headers' => [
                 'X-Butter-Client' => 'PHP/' . self::VERSION,
+                'Accept-Encoding' => 'gzip'
             ],
         ]);
     }
