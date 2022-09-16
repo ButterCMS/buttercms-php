@@ -2,7 +2,9 @@
 
 namespace ButterCMS\Model;
 
-class Model
+use JsonSerializable;
+
+class Model implements JsonSerializable
 {
     public function __construct(array $data)
     {
@@ -28,5 +30,10 @@ class Model
 
             return $this->$propertyName;
         }
+    }
+
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
     }
 }
