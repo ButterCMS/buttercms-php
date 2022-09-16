@@ -2,13 +2,14 @@
 
 namespace ButterCMS\Model;
 
-class Model
+use JsonSerializable;
+
+class Model implements JsonSerializable
 {
     public function __construct(array $data)
     {
-        $class = get_class($this);
         foreach ($data as $key => $value) {
-            if (property_exists($class, $key)) {
+            if (property_exists($this, $key)) {
                 $this->$key = $value;
             }
         }
@@ -21,12 +22,16 @@ class Model
             $propertyName = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $name));
             $propertyName = substr($propertyName, 4);
 
-            $class = get_class($this);
-            if (!property_exists($class, $propertyName)) {
-                throw new \Exception('Method ' . $name . '() does not exist on class ' . $class);
+            if (!property_exists($this, $propertyName)) {
+                throw new \Exception('Method ' . $name . '() does not exist on class ' . get_class($this));
             }
 
             return $this->$propertyName;
         }
+    }
+
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
     }
 }

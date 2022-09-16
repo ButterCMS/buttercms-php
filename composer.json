@@ -12,6 +12,9 @@
         "php": ">=5.3.0",
         "guzzlehttp/guzzle": "^7.0"
     },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "3.*"
+    },
     "autoload": {
         "psr-0": {
             "ButterCMS": "src/"

@@ -4,8 +4,7 @@ namespace ButterCMS\Model;
 
 class PostResponse extends MetaResponse
 {
-    protected
-        $post;
+    protected $post;
 
     public function __construct(array $dataArray)
     {
