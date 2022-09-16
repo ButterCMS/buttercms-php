@@ -32,7 +32,7 @@ require_once('/path/to/buttercms-php/src/ButterCMS.php');
 
 By default the ButterCMS client expects a valid authentication token for all READ operations. For instructions on how to obtain a valid READ authentication token see the [API documentation](https://buttercms.com/docs/api/#authentication).
 
-Optionally, the ButterCMS client accepts a valid authentication token for all WRITE operations. . For instructions on how to obtain a valid WRITE authentication token see the [API documentation](https://buttercms.com/docs/api/#write-authentication).
+Optionally, the ButterCMS client additionally accepts a valid authentication token for all WRITE operations. For instructions on how to obtain a valid WRITE authentication token see the [API documentation](https://buttercms.com/docs/api/#write-authentication).
 
 ```php
 use ButterCMS\ButterCMS;

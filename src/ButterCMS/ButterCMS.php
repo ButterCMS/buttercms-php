@@ -100,6 +100,30 @@ class ButterCMS
         throw new \UnexpectedValueException('API response was invalid JSON: ' . $responseString);
     }
 
+    public function getReadClient()
+    {
+        return $this->readClient;
+    }
+
+    public function setReadClient(Client $client)
+    {
+        $this->readClient = $client;
+
+        return $this;
+    }
+
+    public function getWriteClient()
+    {
+        return $this->writeClient;
+    }
+
+    public function setWriteClient(Client $client)
+    {
+        $this->writeClient = $client;
+
+        return $this;
+    }
+
     ///////////////
     // Feeds
     ///////////////
