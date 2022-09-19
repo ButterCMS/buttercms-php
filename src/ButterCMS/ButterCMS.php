@@ -17,7 +17,7 @@ use GuzzleHttp\Exception\BadResponseException;
 
 class ButterCMS
 {
-    protected const VERSION = '2.4.0';
+    protected const VERSION = '3.0.0';
     protected const API_ROOT_URL = 'https://api.buttercms.com/v2/';
 
     protected $maxRetryCount = 1;
