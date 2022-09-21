@@ -4,17 +4,16 @@ namespace ButterCMS\Model;
 
 class Author extends Model
 {
-    protected
-        $slug,
-        $first_name,
-        $last_name,
-        $email,
-        $bio,
-        $title,
-        $linkedin_url,
-        $facebook_url,
-        $pinterest_url,
-        $instagram_url,
-        $twitter_handle,
-        $profile_image;
+    protected $slug;
+    protected $first_name;
+    protected $last_name;
+    protected $email;
+    protected $bio;
+    protected $title;
+    protected $linkedin_url;
+    protected $facebook_url;
+    protected $pinterest_url;
+    protected $instagram_url;
+    protected $twitter_handle;
+    protected $profile_image;
 }

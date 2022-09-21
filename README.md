@@ -28,6 +28,21 @@ If you do not wish to use Composer, you can download the [latest release](https:
 require_once('/path/to/buttercms-php/src/ButterCMS.php');
 ```
 
+## Authentication
+
+By default the ButterCMS client expects a valid authentication token for all READ operations. For instructions on how to obtain a valid READ authentication token see the [API documentation](https://buttercms.com/docs/api/#authentication).
+
+Optionally, the ButterCMS client additionally accepts a valid authentication token for all WRITE operations. For instructions on how to obtain a valid WRITE authentication token see the [API documentation](https://buttercms.com/docs/api/#write-authentication).
+
+```php
+use ButterCMS\ButterCMS;
+
+$butterCms = new ButterCMS(
+    '<auth_token>',
+    '<write_auth_token>'    // Optional
+);
+```
+
 ## Pages
 
 For a list of `params` see the [API documentation](https://buttercms.com/docs/api/?php#pages)
@@ -35,9 +50,18 @@ For a list of `params` see the [API documentation](https://buttercms.com/docs/ap
 ```php
 use ButterCMS\ButterCMS;
 
-$butterCms = new ButterCMS('<auth_token>');
+$butterCms = new ButterCMS('<auth_token>', '<write_auth_token>');
 
+// Create a Page
+$writeApiStatus = $butterCms->createPage($params);
+
+// Fetch a Page
 $page = $butterCms->fetchPage('about', 'welcome-to-the-site');
+
+// Update a Page
+$pageData = json_decode(json_encode($page), true);
+$pageData['title'] = 'New Page Title';
+$writeApiStatus = $butterCms->updatePage('welcome-to-the-site', $pageData);
 
 // These are equivalent
 echo $page->getFields()['some-field'];
@@ -62,13 +86,44 @@ try {
 
 ## Collections
 
-For a list of `params` see the [API documentation](https://buttercms.com/docs/api/?php#retrieve-a-collection)
+For a list of `params` and functionality see the [API documentation](https://buttercms.com/docs/api/#collections)
 
 ```php
 use ButterCMS\ButterCMS;
 
-$butterCms = new ButterCMS('<auth_token>');
-$butterCms->fetchContentFields(['collection_key'], ['locale' => 'en'])
+$butterCms = new ButterCMS('<auth_token>', '<write_auth_token>');
+
+$writeApiStatus = $butterCms->createCollectionItem('collection_key', [
+    'status' => 'published',
+    'fields' => [
+        [
+          'field1_key': 'Field value',
+          'field2_key': 'Field value',
+        ]
+    ]
+]);
+
+// Get list of specific collections
+$collectionsResponse = $butterCms->fetchCollections(['collection_key'], ['locale' => 'en']);
+
+// Get a collection from the list
+$collection = $collectionsResponse->getCollection('collection_key');
+
+// Get collection items
+$items = $collection->getItems();
+
+// Update a specific item
+$item = $items[0];
+$itemData = json_decode(json_encode($item), true);
+$itemData['fields']['field1_key'] = 'New field value';
+$writeApiStatus = $butterCms->updateCollectionItem($collection->getKey(), $item->getId(), $itemData);
+
+// Delete a specific item
+$deleteSuccess = $butterCms->deleteCollectionItem($collection->getKey(), $item->getId());
+
+// Legacy - deprecated
+$contentFields = $butterCms->fetchContentFields(['collection_key'], ['locale' => 'en']);
+
 ```
 
 ## Blog Engine
@@ -78,7 +133,7 @@ For a list of `params` see the [API documentation](https://buttercms.com/docs/ap
 ```php
 use ButterCMS\ButterCMS;
 
-$butterCms = new ButterCMS('<auth_token>');
+$butterCms = new ButterCMS('<auth_token>', '<write_auth_token>');
 
 // Posts
 $result = $butterCms->fetchPosts(['page' => 1]);
@@ -101,10 +156,18 @@ foreach ($posts as $post) {
     echo $post->getTitle();
 }
 
+// Create a Post
+$writeApiStatus = $butterCms->createPost($params);
+
 // Query for one post
 $response = $butterCms->fetchPost('post-slug');
 $post = $response->getPost();
 echo $post->getTitle();
+
+// Update a Post
+$postData = json_decode(json_encode($post), true);
+$postData['title'] = 'New Post Title';
+$writeApiStatus = $butterCms->updatePost('post-slug', $postData);
 
 // Authors
 $butterCms->fetchAuthor('author-slug');
@@ -124,7 +187,6 @@ $feed = $butterCms->fetchFeed('rss');
 // Search
 $butterCms->searchPosts('query', ['page' => 1]);
 ```
-
 
 ### Other
 

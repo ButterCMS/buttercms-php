@@ -4,12 +4,11 @@ namespace ButterCMS\Model;
 
 class Page extends Model
 {
-    protected
-        $slug,
-        $page_type,
-        $published,
-        $updated,
-        $fields;
+    protected $slug;
+    protected $page_type;
+    protected $published;
+    protected $updated;
+    protected $fields;
 
     public function getField($fieldName, $default = null)
     {

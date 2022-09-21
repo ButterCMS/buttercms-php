@@ -4,22 +4,21 @@ namespace ButterCMS\Model;
 
 class Post extends Model
 {
-    protected
-        $slug,
-        $url,
-        $published,
-        $created,
-        $status,
-        $title,
-        $body,
-        $summary,
-        $seo_title,
-        $meta_description,
-        $author,
-        $categories,
-        $tags,
-        $featured_image,
-        $featured_image_alt;
+    protected $slug;
+    protected $url;
+    protected $published;
+    protected $created;
+    protected $status;
+    protected $title;
+    protected $body;
+    protected $summary;
+    protected $seo_title;
+    protected $meta_description;
+    protected $author;
+    protected $categories;
+    protected $tags;
+    protected $featured_image;
+    protected $featured_image_alt;
 
     public function __construct(array $data)
     {

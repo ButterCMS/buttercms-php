@@ -4,8 +4,7 @@ namespace ButterCMS\Model;
 
 class PagesResponse extends MetaResponse
 {
-    protected
-        $pages;
+    protected $pages;
 
     public function __construct(array $dataArray)
     {

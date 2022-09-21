@@ -4,7 +4,6 @@ namespace ButterCMS\Model;
 
 class Category extends Model
 {
-    protected
-        $slug,
-        $name;
+    protected $slug;
+    protected $name;
 }
