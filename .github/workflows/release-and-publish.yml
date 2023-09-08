@@ -9,7 +9,7 @@
 
 
 # PHP Packagist works slightly differently then the other two cases (npm and rubygems). 
-# In this case, "publishing a # package" means calling a Packagist webhook which causes Packagist to scan the GitHub repo 
+# In this case, "publishing a package" means calling a Packagist webhook which causes Packagist to scan the GitHub repo 
 # and look for new versions itself (instead of us pushing a new version into the package repository directly).
 # release-please, apart from opening a PR, also creates a GitHub release 
 # and a new tag (in this case the Action is triggered by manually merging the PR). 
