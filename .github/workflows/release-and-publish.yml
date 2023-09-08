@@ -8,8 +8,13 @@
 # For more information, see https://github.com/marketplace/actions/release-please-action
 
 
-# PHP Packagist works slightly differently then the other two cases (npm and rubygems). In this case, "publishing a # package" means calling a Packagist webhook which causes Packagist to scan the GitHub repo and look for new versions itself (instead of us pushing a new version into the package repository directly).
-# release-please, apart from opening a PR, also creates a GitHub release and a new tag (in this case the Action is triggered by manually merging the PR). The problem here was that Packagist looked for a new version before release-please was done creating the tag and release. That is why there has to be a dependency so that the publish Action would only start after a proper release has been created.
+# PHP Packagist works slightly differently then the other two cases (npm and rubygems). 
+# In this case, "publishing a # package" means calling a Packagist webhook which causes Packagist to scan the GitHub repo 
+# and look for new versions itself (instead of us pushing a new version into the package repository directly).
+# release-please, apart from opening a PR, also creates a GitHub release 
+# and a new tag (in this case the Action is triggered by manually merging the PR). 
+# The problem here was that Packagist looked for a new version before release-please was done creating the tag and release. 
+# That is why there has to be a dependency so that the publish Action would only start after a proper release has been created.
 # Because these two Actions are connected this way, it seemed logical to me to put them in a single workflow.
 # Comment: https://github.com/ButterCMS/buttercms-php/pull/13/files#r1307254666
 on:
