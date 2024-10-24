@@ -9,6 +9,7 @@ class Post extends Model
     protected $published;
     protected $created;
     protected $status;
+    protected $scheduled;
     protected $title;
     protected $body;
     protected $summary;
@@ -50,4 +51,15 @@ class Post extends Model
     {
         return 'published' === $this->status;
     }
+
+    public function isScheduled()
+    {
+        return 'scheduled' === $this->status;
+    }
+
+    public function isDraft()
+    {
+        return 'draft' === $this->status;
+    }
 }
+
