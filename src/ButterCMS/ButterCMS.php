@@ -18,7 +18,7 @@ use GuzzleHttp\Exception\BadResponseException;
 class ButterCMS
 {
     protected const VERSION = '3.0.1';
-    protected const API_ROOT_URL = 'https://api.buttercms.com/v2/';
+    protected const API_DEFAULT_URL = 'https://api.buttercms.com/v2/';
 
     protected $maxRetryCount = 1;
     protected $readAuthToken;
@@ -71,12 +71,13 @@ class ButterCMS
             }
         }
 
+        $apiRootUrl = getenv('API_BASE_URL') ?: self::API_DEFAULT_URL;
         try {
             $options = array_filter([
                 'query' => $query,
                 'json' => $data,
             ]);
-            $response = $client->$method(self::API_ROOT_URL . $url, $options);
+            $response = $client->$method($apiRootUrl . $url, $options);
         } catch (BadResponseException $e) {
             $httpCode = (int)$e->getResponse()->getStatusCode();
             if ($tryCount < $this->maxRetryCount && $httpCode !== 404) {
