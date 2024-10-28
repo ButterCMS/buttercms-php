@@ -47,6 +47,86 @@ class Post extends Model
         parent::__construct($data);
     }
 
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    public function getPublished()
+    {
+        return $this->published;
+    }
+
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    public function getScheduled()
+    {
+        return $this->scheduled;
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    public function getSummary()
+    {
+        return $this->summary;
+    }
+
+    public function getSeoTitle()
+    {
+        return $this->seo_title;
+    }
+
+    public function getMetaDescription()
+    {
+        return $this->meta_description;
+    }
+
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    public function getFeaturedImage()
+    {
+        return $this->featured_image;
+    }
+
+    public function getFeaturedImageAlt()
+    {
+        return $this->featured_image_alt;
+    }
+
     public function isPublished()
     {
         return 'published' === $this->status;

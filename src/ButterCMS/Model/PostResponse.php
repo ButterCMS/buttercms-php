@@ -15,4 +15,9 @@ class PostResponse extends MetaResponse
 
         parent::__construct($dataArray);
     }
+
+    public function getPost()
+    {
+        return $this->post;
+    }
 }
